@@ -1,1 +1,1 @@
-dependencies to load on app
+dependencies and middleware to load on app
