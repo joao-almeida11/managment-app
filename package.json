@@ -4,6 +4,8 @@
     "main": "index.js",
     "scripts": {
         "dev": "tsx watch src/server.ts",
+        "dev:prisma": "npx prisma dev",
+        "sync:db-schema": "npx prisma migrate dev --name init",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
