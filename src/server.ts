@@ -9,6 +9,8 @@ dotenv.config();
 
 const port = process.env.PORT;
 
+// TODO cors
+
 app.listen(port, err => {
     if (err) {
         console.log(err);
