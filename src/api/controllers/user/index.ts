@@ -1,3 +1,42 @@
+import { Request, Response } from 'express';
+import { prisma } from '../../lib/prisma.ts';
+import { z } from 'zod';
+
+// router.get('user/:userId/tasks');
+
+const getUserTasksByUserIdSchema = z.object({
+    userId: z.number().int().positive('User ID is required'),
+});
+type getUserTasksByUserIdParams = z.infer<typeof getUserTasksByUserIdSchema>;
+
+export const getUserTasksByUserId = async (
+    req: Request<getUserTasksByUserIdParams>,
+    res: Response
+) => {
+    try {
+        const { userId } = getUserTasksByUserIdSchema.parse({
+            userId: Number(req.params.userId),
+        });
+
+        const result = await prisma.task.findMany({
+            where: { authorId: userId },
+            orderBy: { createdAt: 'desc' },
+        });
+
+        res.status(200).json(result);
+    } catch (error) {
+        if (error instanceof z.ZodError) {
+            return res.status(400).json({
+                message: 'Validation error',
+                errors: error.issues,
+            });
+        }
+
+        console.error(error);
+        res.status(500).json({ message: 'Error fetching user tasks' });
+    }
+};
+
 // // EDIT
 // TODO export { default as editUser } from './edit/edit-user.js';
 

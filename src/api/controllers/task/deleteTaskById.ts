@@ -1,0 +1,43 @@
+import { Request, Response } from 'express';
+import { Prisma } from '@prisma/client';
+import { prisma } from '../../lib/prisma.ts';
+import { z } from 'zod';
+
+const taskIdSchema = z.number().int().positive('User ID is required');
+
+const deleteTaskById = async (
+    req: Request<{ taskId: string }>,
+    res: Response
+) => {
+    try {
+        const taskId = taskIdSchema.parse(Number(req.params.taskId));
+
+        const result = await prisma.task.delete({
+            where: { id: taskId },
+        });
+
+        if (!result) {
+            return res.status(404).json({ message: 'Task not found' });
+        }
+
+        res.status(204).send();
+    } catch (error) {
+        if (error instanceof z.ZodError) {
+            return res.status(400).json({
+                message: 'Validation error',
+                errors: error.issues,
+            });
+        }
+
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error?.code === 'P2025') {
+                return res.status(404).json({ message: 'Task not found' });
+            }
+        }
+
+        console.error(error);
+        res.status(500).json({ message: 'Error deleting task' });
+    }
+};
+
+export default deleteTaskById;

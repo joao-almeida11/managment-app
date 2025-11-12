@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
 // for cookies https://www.npmjs.com/package/cookie-parser
+import routes from './api/routes/index.ts';
 
 // load .env
 dotenv.config();
@@ -22,7 +23,7 @@ app.use(morgan('dev')); // use 'tiny' in production for less verbose logs
 // CORS
 app.use(
     cors({
-        origin: ['http://localhost:3000', 'https://yourdomain.com'], // restrict in prod
+        origin: ['http://localhost:3000'], // restrict in prod; add prod domain
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         credentials: true,
     })
@@ -32,7 +33,7 @@ app.use(
 app.use(helmet());
 
 // if its behind a proxy or load balancer
-app.enable('trust proxy');
+// app.enable('trust proxy');
 
 // Rate Limit
 // TODO rateLimiter.ts
@@ -46,6 +47,8 @@ app.use(compression());
 // Body parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/api', routes);
 
 const port = process.env.PORT;
 

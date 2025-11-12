@@ -5,7 +5,9 @@
     "scripts": {
         "dev": "tsx watch src/server.ts",
         "dev:prisma": "npx prisma dev",
+        "dev:prisma-studio": "npx prisma studio",
         "sync:db-schema": "npx prisma migrate dev --name init",
+        "seed:prisma": "tsx prisma/seed.ts",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
