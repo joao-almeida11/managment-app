@@ -1,39 +1,39 @@
-import { Request, Response } from 'express';
-import { Prisma } from '@prisma/client';
-import { prisma } from '../../lib/prisma';
-import { z } from 'zod';
+import { Request, Response } from "express";
+import { Prisma } from "@prisma/client";
+import { prisma } from "../../lib/prisma";
+import { z } from "zod";
 
-const taskIdSchema = z.number().int().positive('Task ID is required');
+const taskIdSchema = z.number().int().positive("Task ID is required");
 
 const deleteTaskById = async (
-    req: Request<{ taskId: string }>,
-    res: Response
+  req: Request<{ taskId: string }>,
+  res: Response,
 ) => {
-    try {
-        const taskId = taskIdSchema.parse(Number(req.params.taskId));
+  try {
+    const taskId = taskIdSchema.parse(Number(req.params.taskId));
 
-        await prisma.task.delete({
-            where: { id: taskId },
-        });
+    await prisma.task.delete({
+      where: { id: taskId },
+    });
 
-        res.status(204).send();
-    } catch (error) {
-        if (error instanceof z.ZodError) {
-            return res.status(400).json({
-                message: 'Validation error',
-                errors: error.issues,
-            });
-        }
-
-        if (error instanceof Prisma.PrismaClientKnownRequestError) {
-            if (error?.code === 'P2025') {
-                return res.status(404).json({ message: 'Task not found' });
-            }
-        }
-
-        console.error(error);
-        res.status(500).json({ message: 'Error deleting task' });
+    res.status(204).send();
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({
+        message: "Validation error",
+        errors: error.issues,
+      });
     }
+
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error?.code === "P2025") {
+        return res.status(404).json({ message: "Task not found" });
+      }
+    }
+
+    console.error(error);
+    res.status(500).json({ message: "Error deleting task" });
+  }
 };
 
 export default deleteTaskById;

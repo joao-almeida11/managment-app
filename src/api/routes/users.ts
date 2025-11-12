@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router } from "express";
 // TODO user routes
 // import {
 //     changePassword,
@@ -14,7 +14,7 @@ import { Router } from 'express';
 //     verifyEmail,
 // } from '../controllers/user/index.js';
 // import { auth, imageUpload } from '../middlewares/index.js';
-import { getUserTasksByUserId } from '../controllers/user/index.ts';
+import { getUserTasksByUserId } from "../controllers/user/index.ts";
 
 const router = Router();
 
@@ -34,6 +34,6 @@ const router = Router();
 // router.get('/', auth, getUser);
 // router.delete('/', auth, deleteUser);
 
-router.get('/:userId/tasks', getUserTasksByUserId);
+router.get("/:userId/tasks", getUserTasksByUserId);
 
 export default router;
