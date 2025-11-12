@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import health from './health.ts';
-import users from './users.ts';
-import tasks from './tasks.ts';
+import health from './health';
+import users from './users';
+import tasks from './tasks';
 
 const router = Router();
 

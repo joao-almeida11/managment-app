@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { Prisma } from '@prisma/client';
-import { prisma } from '../../lib/prisma.ts';
+import { prisma } from '../../lib/prisma';
 import { z } from 'zod';
 
-const taskIdSchema = z.number().int().positive('User ID is required');
+const taskIdSchema = z.number().int().positive('Task ID is required');
 
 const deleteTaskById = async (
     req: Request<{ taskId: string }>,
@@ -12,13 +12,9 @@ const deleteTaskById = async (
     try {
         const taskId = taskIdSchema.parse(Number(req.params.taskId));
 
-        const result = await prisma.task.delete({
+        await prisma.task.delete({
             where: { id: taskId },
         });
-
-        if (!result) {
-            return res.status(404).json({ message: 'Task not found' });
-        }
 
         res.status(204).send();
     } catch (error) {

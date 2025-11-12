@@ -5,6 +5,11 @@ const prisma = new PrismaClient();
 async function main() {
     console.log('🌱 Seeding database...');
 
+    // Clear existing seed data
+    await prisma.comment.deleteMany({});
+    await prisma.task.deleteMany({});
+    await prisma.user.deleteMany({});
+
     // --- Users ---
     const users = await prisma.user.createMany({
         data: [

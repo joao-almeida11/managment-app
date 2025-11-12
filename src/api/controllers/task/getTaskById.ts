@@ -2,7 +2,10 @@ import { Request, Response } from 'express';
 import { prisma } from '../../lib/prisma.ts';
 import { z } from 'zod';
 
-const taskIdSchema = z.number().int().positive('User ID is required');
+const taskIdSchema = z
+    .number()
+    .int()
+    .positive('Task ID must be a positive integer');
 
 const getTaskById = async (req: Request<{ taskId: string }>, res: Response) => {
     try {

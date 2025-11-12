@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import { prisma } from '../../lib/prisma.ts';
+import { Prisma } from '@prisma/client';
+import { prisma } from '../../lib/prisma';
 import { z } from 'zod';
 
-const taskIdSchema = z.number().int().positive('User ID is required');
+const taskIdSchema = z.number().int().positive('Task ID is required');
 
 const updateTaskByIdSchema = z.object({
     title: z.string().min(3, 'Title is required'),
@@ -25,10 +26,6 @@ const updateTaskById = async (
             data: data,
         });
 
-        if (!result) {
-            return res.status(404).json({ message: 'Task not found' });
-        }
-
         res.status(200).json(result);
     } catch (error) {
         if (error instanceof z.ZodError) {
@@ -36,6 +33,12 @@ const updateTaskById = async (
                 message: 'Validation error',
                 errors: error.issues,
             });
+        }
+
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error?.code === 'P2025') {
+                return res.status(404).json({ message: 'Task not found' });
+            }
         }
 
         console.error(error);

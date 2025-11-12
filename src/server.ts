@@ -7,7 +7,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
 // for cookies https://www.npmjs.com/package/cookie-parser
-import routes from './api/routes/index.ts';
+import routes from './api/routes/index';
 
 // load .env
 dotenv.config();
@@ -50,7 +50,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', routes);
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3001;
 
 app.listen(port, err => {
     if (err) {

@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { prisma } from '../../lib/prisma.ts';
+import { prisma } from '../../lib/prisma';
 import { z } from 'zod';
 
 const createTaskSchema = z.object({
-    title: z.string().min(3, 'Title is required'),
+    title: z.string().min(3, 'Title must be at least 3 characters long'),
     description: z.string().optional(),
     authorId: z.number().int().positive('authorId must be a positive integer'),
 });
@@ -33,6 +33,15 @@ const createTask = async (
                 message: 'Validation error',
                 errors: error.issues,
             });
+        }
+
+        // Handle Prisma errors
+        if (error && typeof error === 'object' && 'code' in error) {
+            if (error.code === 'P2025') {
+                return res.status(404).json({
+                    message: 'Author not found',
+                });
+            }
         }
 
         console.error(error);

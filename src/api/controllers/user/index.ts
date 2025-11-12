@@ -4,19 +4,14 @@ import { z } from 'zod';
 
 // router.get('user/:userId/tasks');
 
-const getUserTasksByUserIdSchema = z.object({
-    userId: z.number().int().positive('User ID is required'),
-});
-type getUserTasksByUserIdParams = z.infer<typeof getUserTasksByUserIdSchema>;
+const userIdSchema = z.number().int().positive('User ID is required');
 
 export const getUserTasksByUserId = async (
-    req: Request<getUserTasksByUserIdParams>,
+    req: Request<{ userId: string }>,
     res: Response
 ) => {
     try {
-        const { userId } = getUserTasksByUserIdSchema.parse({
-            userId: Number(req.params.userId),
-        });
+        const userId = userIdSchema.parse(Number(req.params.userId));
 
         const result = await prisma.task.findMany({
             where: { authorId: userId },
