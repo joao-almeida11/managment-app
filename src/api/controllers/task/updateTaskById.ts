@@ -11,10 +11,10 @@ const updateTaskByIdSchema = z.object({
   status: z.enum(["TO_DO", "IN_PROGRESS", "IN_REVIEW", "DONE"]).optional(),
 });
 
-type UpdateTaskBody = z.infer<typeof updateTaskByIdSchema>;
+type updateTaskBody = z.infer<typeof updateTaskByIdSchema>;
 
 const updateTaskById = async (
-  req: Request<{ taskId: string }, {}, UpdateTaskBody>,
+  req: Request<{ taskId: string }, {}, updateTaskBody>,
   res: Response,
 ) => {
   try {

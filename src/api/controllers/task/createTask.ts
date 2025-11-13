@@ -7,10 +7,10 @@ const createTaskSchema = z.object({
   description: z.string().optional(),
   authorId: z.number().int().positive("authorId must be a positive integer"),
 });
-type CreateTaskBody = z.infer<typeof createTaskSchema>;
+type createTaskBody = z.infer<typeof createTaskSchema>;
 
 const createTask = async (
-  req: Request<{}, {}, CreateTaskBody>,
+  req: Request<{}, {}, createTaskBody>,
   res: Response,
 ) => {
   try {
