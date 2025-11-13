@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 enum TaskStatus {
@@ -21,53 +21,54 @@ enum TaskStatus {
 }
 
 enum UserRoles {
-  USER,
+  USER
   ADMIN
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String  @unique
-  password String
-  name  String?
-  image String?
-  role UserRoles @default(USER)
-  resetToken String? @unique
+  id                Int       @id @default(autoincrement())
+  email             String    @unique
+  password          String
+  name              String
+  image             String?
+  role              UserRoles @default(USER)
+  resetToken        String?   @unique
   resetTokenExpires DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relations
-  tasks Task[]
-  comments Comment[]
+  tasks         Task[]
+  comments      Comment[]
+  refreshTokens RefreshToken[]
 }
 
 model RefreshToken {
-  id Int @id @default(autoincrement())
+  id    Int    @id @default(autoincrement())
   token String @unique
 
   expiresAt DateTime
   createdAt DateTime @default(now())
 
-   // Relations
-  user User @relation(fields: [userId], references: [id])
+  // Relations
+  user   User @relation(fields: [userId], references: [id])
   userId Int
 
   @@index([userId])
 }
 
 model Task {
-  id Int @id @default(autoincrement())
-  title String
-  description String? @db.Text
-  status TaskStatus @default(TO_DO)
+  id          Int        @id @default(autoincrement())
+  title       String
+  description String?    @db.Text
+  status      TaskStatus @default(TO_DO)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relations
-  author User @relation(fields: [authorId], references: [id])
+  author   User      @relation(fields: [authorId], references: [id])
   authorId Int
   comments Comment[]
 
@@ -75,20 +76,19 @@ model Task {
 }
 
 model Comment {
-  id Int @id @default(autoincrement())
+  id      Int     @id @default(autoincrement())
   content String? @db.Text
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relations
-  author User @relation(fields: [authorId], references: [id])
+  author   User @relation(fields: [authorId], references: [id])
   authorId Int
-  task Task @relation(fields: [taskId], references: [id])
-  taskId Int
+  task     Task @relation(fields: [taskId], references: [id])
+  taskId   Int
 
   @@index([taskId])
 }
-
 
 // TODO support mentions or comment replies
