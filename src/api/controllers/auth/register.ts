@@ -11,7 +11,9 @@ import {
 export const registerSchema = z.object({
   email: emailValidation,
   password: passwordValidation,
-  name: z.string().min(2, "Name must be at least 2 characters long"),
+  name: z.string().min(2, {
+    message: "Name must be at least 2 characters long",
+  }),
   image: imageUrlValidation,
 });
 
@@ -22,7 +24,10 @@ const register = async (req: Request<{}, {}, registerBody>, res: Response) => {
     const { email, password, name, image } = registerSchema.parse(req.body);
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(
+      password,
+      process.env.BCRYPT_ENCRYPTION_SALT_ROUNDS || 12,
+    );
 
     // Create user
     const user = await prisma.user.create({
@@ -64,3 +69,5 @@ const register = async (req: Request<{}, {}, registerBody>, res: Response) => {
 };
 
 export default register;
+
+//TODO add second confirm password
