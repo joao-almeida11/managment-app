@@ -8,14 +8,31 @@
     "dev:prisma-studio": "npx prisma studio",
     "sync:db-schema": "npx prisma migrate dev --name init",
     "seed:prisma": "tsx prisma/seed.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "check-format": "prettier --list-different \"./**/*.{ts,tsx,js,jsx,json,md,css,sass,scss}\"",
     "format": "prettier --write \"./**/*.{ts,tsx,js,jsx,json,md,css,sass,scss}\"",
-    "format:prisma": "npx prisma format"
+    "format:prisma": "npx prisma format",
+    "prepare": "husky",
+    "lint-staged": "lint-staged"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
+  "lint-staged": {
+    "*.js": "eslint --fix",
+    "*.jsx": "eslint --fix",
+    "*.ts": "eslint --fix",
+    "*.tsx": "eslint --fix",
+    "*.{js,jsx,ts,tsx,css,scss,json}": "prettier --write"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  },
   "dependencies": {
     "@prisma/client": "^6.19.0",
     "bcrypt": "^6.0.0",
@@ -29,16 +46,39 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "^20.0.0",
+    "@eslint/js": "^9.39.1",
     "@types/bcrypt": "^6.0.0",
     "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.4",
+    "@typescript-eslint/parser": "^8.46.4",
+    "@vitest/eslint-plugin": "^1.4.2",
+    "commitlint": "^20.1.0",
+    "cz-git": "^1.12.0",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-security": "^3.0.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-unicorn": "^62.0.0",
     "express-rate-limit": "^8.2.1",
+    "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "playwright": "^1.56.1",
     "prettier": "^3.6.2",
     "prisma": "^6.19.0",
+    "supertest": "^7.1.4",
     "tsx": "^4.20.6",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vitest": "^4.0.8",
+    "vitest-mock-extended": "^3.1.0"
   }
 }
