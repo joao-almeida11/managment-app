@@ -2,6 +2,7 @@
   "name": "tasks-express-js-server",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "dev:prisma": "npx prisma dev",

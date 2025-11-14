@@ -1,11 +1,13 @@
-import { Request, Response } from "express";
-import { z } from "zod";
 import bcrypt from "bcrypt";
+import type { Request, Response } from "express";
+import { z } from "zod";
+
+import env from "../../../config/env";
 import { prisma } from "../../lib/prisma";
 import {
   emailValidation,
-  passwordValidation,
   imageUrlValidation,
+  passwordValidation,
 } from "../../lib/validation";
 
 export const registerSchema = z.object({
@@ -19,14 +21,17 @@ export const registerSchema = z.object({
 
 type registerBody = z.infer<typeof registerSchema>;
 
-const register = async (req: Request<{}, {}, registerBody>, res: Response) => {
+const register = async (
+  req: Request<unknown, unknown, registerBody>,
+  res: Response,
+) => {
   try {
     const { email, password, name, image } = registerSchema.parse(req.body);
 
     // Hash password
     const hashedPassword = await bcrypt.hash(
       password,
-      process.env.BCRYPT_ENCRYPTION_SALT_ROUNDS || 12,
+      env.BCRYPT_ENCRYPTION_SALT_ROUNDS || 12,
     );
 
     // Create user
@@ -64,7 +69,7 @@ const register = async (req: Request<{}, {}, registerBody>, res: Response) => {
     }
 
     console.error(error);
-    res.status(500).json({ message: "Error creating task" });
+    res.status(500).json({ message: "Error creating user" });
   }
 };
 

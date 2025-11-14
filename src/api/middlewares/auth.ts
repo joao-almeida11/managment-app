@@ -1,5 +1,7 @@
-import { Request, Response, NextFunction } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { jwtVerify } from "jose";
+
+import env from "../../config/env";
 
 export interface AuthenticatedRequest extends Request {
   user?: { id: number; role: string };
@@ -18,7 +20,7 @@ export const auth = async (
   const token = header.split(" ")[1];
 
   try {
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const secret = new TextEncoder().encode(env.JWT_SECRET);
     const { payload } = await jwtVerify(token, secret);
 
     req.user = {

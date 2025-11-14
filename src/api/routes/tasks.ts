@@ -1,9 +1,9 @@
 import { Router } from "express";
 
 import createTask from "../controllers/task/createTask";
+import deleteTaskById from "../controllers/task/deleteTaskById";
 import getTaskById from "../controllers/task/getTaskById";
 import updateTaskById from "../controllers/task/updateTaskById";
-import deleteTaskById from "../controllers/task/deleteTaskById";
 
 const router = Router();
 

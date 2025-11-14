@@ -1,6 +1,8 @@
 import { SignJWT } from "jose";
 
-const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+import env from "../../config/env";
+
+const secret = new TextEncoder().encode(env.JWT_SECRET);
 
 export const generateAccessToken = async (user: {
   id: number;

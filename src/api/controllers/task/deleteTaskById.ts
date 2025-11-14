@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
 import { Prisma } from "@prisma/client";
-import { prisma } from "../../lib/prisma";
+import type { Request, Response } from "express";
 import { z } from "zod";
+
+import { prisma } from "../../lib/prisma";
 
 const taskIdSchema = z.number().int().positive("Task ID is required");
 

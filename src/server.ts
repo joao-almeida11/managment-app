@@ -1,19 +1,22 @@
 // Setup a minimal Express app with a health route (GET /health → { status: 'ok' })
 "use strict";
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import morgan from "morgan";
-import helmet from "helmet";
 import compression from "compression";
-// for cookies https://www.npmjs.com/package/cookie-parser
+import cors from "cors";
+import dotenv from "dotenv";
+import express from "express";
+import helmet from "helmet";
+import morgan from "morgan";
+
 import routes from "./api/routes/index";
+import env from "./config/env";
+
+// for cookies https://www.npmjs.com/package/cookie-parser
 
 // load .env
 dotenv.config();
 
 // CONSTANTS
-const isProd = process.env.NODE_ENV === "production";
+// const isProd = env.NODE_ENV === "production";
 
 const app = express();
 
@@ -50,7 +53,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", routes);
 
-const port = process.env.PORT || 3001;
+const port = env.PORT || 3001;
 
 app.listen(port, (err) => {
   if (err) {

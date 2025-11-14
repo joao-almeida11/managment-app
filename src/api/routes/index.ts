@@ -1,9 +1,10 @@
 import { Router } from "express";
-import health from "./health";
-import auth from "./auth";
-import users from "./users";
-import tasks from "./tasks";
+
 import { auth as authMiddleware } from "../middlewares/auth";
+import auth from "./auth";
+import health from "./health";
+import tasks from "./tasks";
+import users from "./users";
 
 const router = Router();
 

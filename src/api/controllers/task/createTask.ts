@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
-import { prisma } from "../../lib/prisma";
+import type { Request, Response } from "express";
 import { z } from "zod";
+
+import { prisma } from "../../lib/prisma";
 
 const createTaskSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters long"),
@@ -10,7 +11,7 @@ const createTaskSchema = z.object({
 type createTaskBody = z.infer<typeof createTaskSchema>;
 
 const createTask = async (
-  req: Request<{}, {}, createTaskBody>,
+  req: Request<unknown, unknown, createTaskBody>,
   res: Response,
 ) => {
   try {

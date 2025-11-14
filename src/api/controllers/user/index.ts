@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
-import { prisma } from "../../lib/prisma.ts";
+import type { Request, Response } from "express";
 import { z } from "zod";
+
+import { prisma } from "../../lib/prisma.ts";
 
 // router.get('user/:userId/tasks');
 
