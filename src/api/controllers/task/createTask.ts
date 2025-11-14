@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import type { Request, Response } from "express";
 import { z } from "zod";
 
@@ -8,10 +9,10 @@ const createTaskSchema = z.object({
   description: z.string().optional(),
   authorId: z.number().int().positive("authorId must be a positive integer"),
 });
-type createTaskBody = z.infer<typeof createTaskSchema>;
+export type createTaskBodyType = z.infer<typeof createTaskSchema>;
 
 const createTask = async (
-  req: Request<unknown, unknown, createTaskBody>,
+  req: Request<unknown, unknown, createTaskBodyType>,
   res: Response,
 ) => {
   try {
@@ -35,7 +36,7 @@ const createTask = async (
     }
 
     // Handle Prisma errors
-    if (error && typeof error === "object" && "code" in error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2025") {
         return res.status(404).json({
           message: "Author not found",

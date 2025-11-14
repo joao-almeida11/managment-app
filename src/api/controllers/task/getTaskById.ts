@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import type { Request, Response } from "express";
 import { z } from "zod";
 
@@ -12,7 +13,7 @@ const getTaskById = async (req: Request<{ taskId: string }>, res: Response) => {
   try {
     const taskId = taskIdSchema.parse(Number(req.params.taskId));
 
-    const result = await prisma.task.findUnique({
+    const result = await prisma.task.findUniqueOrThrow({
       where: { id: taskId },
     });
 
@@ -27,6 +28,12 @@ const getTaskById = async (req: Request<{ taskId: string }>, res: Response) => {
         message: "Validation error",
         errors: error.issues,
       });
+    }
+
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error?.code === "P2025") {
+        return res.status(404).json({ message: "Task not found" });
+      }
     }
 
     console.error(error);
