@@ -87,6 +87,9 @@ export default defineConfig([
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    rules: {
+      "@typescript-eslint/unbound-method": "off",
+    },
   },
   // Turn off ESLint rules that conflict with Prettier
   eslintConfigPrettier,
