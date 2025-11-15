@@ -1,8 +1,7 @@
+import { prisma } from "@lib/prisma.ts";
 import { Prisma } from "@prisma/client";
 import type { Request, Response } from "express";
 import { z } from "zod";
-
-import { prisma } from "../../lib/prisma.ts";
 
 const taskIdSchema = z
   .number()

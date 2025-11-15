@@ -1,7 +1,6 @@
+import env from "@config/env";
 import type { NextFunction, Request, Response } from "express";
 import { jwtVerify } from "jose";
-
-import env from "../../config/env";
 
 export interface AuthenticatedRequest extends Request {
   user?: { id: number; role: string };

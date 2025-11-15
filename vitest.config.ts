@@ -1,6 +1,17 @@
+import path from "node:path";
+
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@api": path.resolve(__dirname, "src/api"),
+      "@lib": path.resolve(__dirname, "src/api/lib"),
+      "@config": path.resolve(__dirname, "src/config"),
+      "@tests": path.resolve(__dirname, "tests"),
+    },
+  },
+
   test: {
     exclude: ["**/node_modules/**", "**/dist/**", "./temp/**"],
 

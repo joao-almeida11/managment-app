@@ -1,6 +1,5 @@
+import env from "@config/env";
 import { SignJWT } from "jose";
-
-import env from "../../config/env";
 
 const secret = new TextEncoder().encode(env.JWT_SECRET);
 

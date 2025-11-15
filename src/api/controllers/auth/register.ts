@@ -1,14 +1,13 @@
-import bcrypt from "bcrypt";
-import type { Request, Response } from "express";
-import { z } from "zod";
-
-import env from "../../../config/env";
-import { prisma } from "../../lib/prisma";
+import env from "@config/env";
+import { prisma } from "@lib/prisma";
 import {
   emailValidation,
   imageUrlValidation,
   passwordValidation,
-} from "../../lib/validation";
+} from "@lib/validation";
+import bcrypt from "bcrypt";
+import type { Request, Response } from "express";
+import { z } from "zod";
 
 export const registerSchema = z.object({
   email: emailValidation,

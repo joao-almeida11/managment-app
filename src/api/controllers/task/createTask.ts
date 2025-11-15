@@ -1,8 +1,7 @@
+import { prisma } from "@lib/prisma";
 import { Prisma } from "@prisma/client";
 import type { Request, Response } from "express";
 import { z } from "zod";
-
-import { prisma } from "../../lib/prisma";
 
 const createTaskSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters long"),
