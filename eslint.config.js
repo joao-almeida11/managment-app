@@ -14,7 +14,16 @@ import js from "@eslint/js";
 import tseslint from "typescript-eslint";
 
 export default defineConfig([
-  globalIgnores(["dist", "**/*.d.ts", ".storybook", "node_modules", "prisma"]),
+  globalIgnores([
+    "dist",
+    "**/*.d.ts",
+    ".storybook",
+    "node_modules",
+    "prisma",
+    "vitest.config.ts",
+    "prisma.config.ts",
+    "src/generated/client",
+  ]),
   {
     files: ["**/*.{ts,tsx}"],
     extends: [
@@ -28,7 +37,7 @@ export default defineConfig([
       globals: globals.node,
       parserOptions: {
         parser: tsParser,
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
+        project: ["./tsconfig.json"],
         tsconfigRootDir: import.meta.dirname,
         sourceType: "module", // ES modules
       },
@@ -83,7 +92,7 @@ export default defineConfig([
       ecmaVersion: 2022,
       globals: globals.browser,
       parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
+        project: ["./tsconfig.json"],
         tsconfigRootDir: import.meta.dirname,
       },
     },

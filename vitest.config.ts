@@ -9,6 +9,7 @@ export default defineConfig({
       "@lib": path.resolve(__dirname, "src/api/lib"),
       "@config": path.resolve(__dirname, "src/config"),
       "@tests": path.resolve(__dirname, "tests"),
+      "@localPrisma": path.resolve(__dirname, "src/generated/"),
     },
   },
 
