@@ -1,6 +1,6 @@
 import eslintPluginNode from "eslint-plugin-node";
 import eslintPluginPrettier from "eslint-plugin-prettier";
-import eslintPluginImport from "eslint-plugin-import";
+import importX from "eslint-plugin-import-x";
 import eslintPluginSimpleImportSort from "eslint-plugin-simple-import-sort";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import eslintPluginSecurity from "eslint-plugin-security";
@@ -42,11 +42,22 @@ export default defineConfig([
         sourceType: "module", // ES modules
       },
     },
+    settings: {
+      "import-x/resolver": {
+        typescript: {
+          project: "./tsconfig.json",
+          alwaysTryTypes: true,
+        },
+        node: {
+          extensions: [".js", ".ts"],
+        },
+      },
+    },
     plugins: {
+      "import-x": importX,
       node: eslintPluginNode,
       "@typescript-eslint": typescriptEslintPlugin,
       prettier: eslintPluginPrettier,
-      import: eslintPluginImport,
       "simple-import-sort": eslintPluginSimpleImportSort,
       unicorn: eslintPluginUnicorn,
       security: eslintPluginSecurity,
@@ -61,6 +72,9 @@ export default defineConfig([
       // Import sorting
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
+
+      "import-x/no-unresolved": "error",
+      "import/extensions": "off",
 
       // TypeScript-specific rules
       //   "@typescript-eslint/explicit-function-return-type": "off", // Allow implicit returns

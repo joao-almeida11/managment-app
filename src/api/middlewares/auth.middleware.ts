@@ -1,4 +1,4 @@
-import env from "@config/env";
+import { JWT_SECRET } from "@config/env.js";
 import type { NextFunction, Request, Response } from "express";
 import { jwtVerify } from "jose";
 
@@ -19,7 +19,7 @@ export const auth = async (
   const token = header.split(" ")[1];
 
   try {
-    const secret = new TextEncoder().encode(env.JWT_SECRET);
+    const secret = new TextEncoder().encode(JWT_SECRET);
     const { payload } = await jwtVerify(token, secret);
 
     req.user = {

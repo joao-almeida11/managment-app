@@ -1,17 +1,10 @@
-import { prisma } from "@lib/prisma";
-import { Prisma } from "@prisma/client";
+import taskIdSchema from "@api/validators/tasks/taskId.schema.js";
+import type { updateTaskBody } from "@api/validators/tasks/updateTaskById.schema.js";
+import updateTaskByIdSchema from "@api/validators/tasks/updateTaskById.schema.js";
+import { prisma } from "@lib/prisma.js";
+import { Prisma } from "@localPrisma/client/index.js";
 import type { Request, Response } from "express";
 import { z } from "zod";
-
-const taskIdSchema = z.number().int().positive("Task ID is required");
-
-const updateTaskByIdSchema = z.object({
-  title: z.string().min(3, "Title is required"),
-  description: z.string().optional(),
-  status: z.enum(["TO_DO", "IN_PROGRESS", "IN_REVIEW", "DONE"]).optional(),
-});
-
-type updateTaskBody = z.infer<typeof updateTaskByIdSchema>;
 
 const updateTaskById = async (
   req: Request<{ taskId: string }, unknown, updateTaskBody>,

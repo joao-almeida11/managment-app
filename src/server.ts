@@ -1,9 +1,9 @@
 "use strict";
-import env from "@config/env";
+import { PORT } from "@config/env.js";
 
-import app from "./app";
+import app from "./app.js";
 
-const port = env.PORT || 3001;
+const port = (PORT as string) || 3001;
 
 app.listen(port, (err) => {
   if (err) {

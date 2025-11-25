@@ -1,10 +1,10 @@
-import env from "@config/env";
-import { prisma } from "@lib/prisma";
+import { BCRYPT_ENCRYPTION_SALT_ROUNDS } from "@config/env.js";
+import { prisma } from "@lib/prisma.js";
 import {
   emailValidation,
   imageUrlValidation,
   passwordValidation,
-} from "@lib/validation";
+} from "@lib/validation.js";
 import bcrypt from "bcrypt";
 import type { Request, Response } from "express";
 import { z } from "zod";
@@ -30,7 +30,7 @@ const register = async (
     // Hash password
     const hashedPassword = await bcrypt.hash(
       password,
-      env.BCRYPT_ENCRYPTION_SALT_ROUNDS || 12,
+      (BCRYPT_ENCRYPTION_SALT_ROUNDS as string) || 12,
     );
 
     // Create user

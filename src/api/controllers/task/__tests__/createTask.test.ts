@@ -1,19 +1,17 @@
-import { TaskStatus } from "@prisma/client";
-import { mockResponse } from "@tests/utils/mockResponse";
+import type { createTaskBodyType } from "@api/validators/tasks/createTask.schema.js";
+import { prisma } from "@lib/__mocks__/prisma.js";
+import { TaskStatus } from "@localPrisma/client/index.js";
+import { mockResponse } from "@tests/utils/mockResponse.js";
 import type { Request } from "express";
 import { expect, test, vi } from "vitest";
 
-import type { createTaskBodyType } from "../createTask";
-
 // Mock the module that createTask imports
 vi.mock("@lib/prisma", async () => {
-  const { prisma } = await import("@lib/__mocks__/prisma");
+  const { prisma } = await import("@lib/__mocks__/prisma.js");
   return { prisma };
 });
 
-import { prisma } from "@lib/__mocks__/prisma";
-
-import createTask from "../createTask";
+import createTask from "../createTask.controller.js";
 
 test("createTask should return the generated task", async () => {
   const newTask = {

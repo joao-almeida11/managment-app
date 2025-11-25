@@ -5,7 +5,7 @@
     "moduleResolution": "NodeNext",
 
     // alias
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "@localPrisma/*": ["./src/generated/*"],
       "@api/*": ["./src/api/*"],
@@ -36,6 +36,12 @@
     // let TypeScript understand default imports from CommonJS-style modules
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
+
+    // settings to directly run typescript without compiling
+    // https://nodejs.org/api/typescript.html#type-stripping
+    // "allowImportingTsExtensions": true,
+    // "noEmit": true,
+    // "verbatimModuleSyntax": true
   },
   "tsc-alias": {
     "resolveFullPaths": true

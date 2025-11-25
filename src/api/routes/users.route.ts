@@ -1,5 +1,3 @@
-import { Router } from "express";
-
 // TODO user routes
 // import {
 //     deleteUser,
@@ -7,8 +5,9 @@ import { Router } from "express";
 //     getUser,
 // } from '../controllers/user/index.js';
 // import { auth, imageUpload } from '../middlewares/index.js';
-import { getUserTasksByUserId } from "../controllers/user/index.ts";
-import { auth as authMiddleware } from "../middlewares/auth";
+import { getUserTasksByUserId } from "@api/controllers/user/index.js";
+import { auth as authMiddleware } from "@api/middlewares/auth.middleware.js";
+import { Router } from "express";
 
 const router = Router();
 

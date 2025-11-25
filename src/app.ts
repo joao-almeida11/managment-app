@@ -1,12 +1,12 @@
 "use strict";
-import routes from "@api/routes/index";
+import routes from "@api/routes/index.route.js";
 import compression from "compression";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-// import env from "@config/env";
+// import env from "@config/env.js";
 
 // for cookies https://www.npmjs.com/package/cookie-parser
 

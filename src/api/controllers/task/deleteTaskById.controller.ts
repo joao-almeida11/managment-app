@@ -1,9 +1,8 @@
-import { prisma } from "@lib/prisma";
-import { Prisma } from "@prisma/client";
+import taskIdSchema from "@api/validators/tasks/taskId.schema.js";
+import { prisma } from "@lib/prisma.js";
+import { Prisma } from "@localPrisma/client/index.js";
 import type { Request, Response } from "express";
 import { z } from "zod";
-
-const taskIdSchema = z.number().int().positive("Task ID is required");
 
 const deleteTaskById = async (
   req: Request<{ taskId: string }>,

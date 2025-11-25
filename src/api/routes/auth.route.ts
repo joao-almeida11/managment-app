@@ -1,6 +1,5 @@
+import register from "@api/controllers/auth/register.js";
 import { Router } from "express";
-
-import register from "../controllers/auth/register";
 // import { auth as authMiddleware } from "../middlewares/auth";
 
 const router = Router();

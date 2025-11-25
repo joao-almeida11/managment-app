@@ -1,5 +1,5 @@
-import env from "@config/env";
-import { PrismaClient } from "@prisma/client";
+import { NODE_ENV } from "@config/env.js";
+import { PrismaClient } from "@localPrisma/client/index.js";
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
@@ -7,6 +7,6 @@ const globalForPrisma = globalThis as unknown as {
 
 export const prisma = globalForPrisma.prisma ?? new PrismaClient();
 
-if (env.NODE_ENV !== "production") {
+if (NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
 }

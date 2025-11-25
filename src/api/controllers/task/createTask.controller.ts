@@ -1,14 +1,9 @@
-import { prisma } from "@lib/prisma";
-import { Prisma } from "@prisma/client";
+import type { createTaskBodyType } from "@api/validators/tasks/createTask.schema.js";
+import createTaskSchema from "@api/validators/tasks/createTask.schema.js";
+import { prisma } from "@lib/prisma.js";
+import { Prisma } from "@localPrisma/client/index.js";
 import type { Request, Response } from "express";
 import { z } from "zod";
-
-const createTaskSchema = z.object({
-  title: z.string().min(3, "Title must be at least 3 characters long"),
-  description: z.string().optional(),
-  authorId: z.number().int().positive("authorId must be a positive integer"),
-});
-export type createTaskBodyType = z.infer<typeof createTaskSchema>;
 
 const createTask = async (
   req: Request<unknown, unknown, createTaskBodyType>,

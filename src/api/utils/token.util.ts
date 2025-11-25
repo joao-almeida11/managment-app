@@ -1,7 +1,7 @@
-import env from "@config/env";
+import { JWT_SECRET } from "@config/env.js";
 import { SignJWT } from "jose";
 
-const secret = new TextEncoder().encode(env.JWT_SECRET);
+const secret = new TextEncoder().encode(JWT_SECRET);
 
 export const generateAccessToken = async (user: {
   id: number;
