@@ -5,6 +5,10 @@ import { Prisma } from "@localPrisma/client/index.js";
 import type { Request, Response } from "express";
 import { z } from "zod";
 
+// @desc Create task
+// @route POST /tasks
+// @access Private
+
 const createTask = async (
   req: Request<unknown, unknown, createTaskBodyType>,
   res: Response,

@@ -6,6 +6,10 @@ import { Prisma } from "@localPrisma/client/index.js";
 import type { Request, Response } from "express";
 import { z } from "zod";
 
+// @desc Get task
+// @route PUT /tasks/:taskId
+// @access Private
+
 const updateTaskById = async (
   req: Request<{ taskId: string }, unknown, updateTaskBody>,
   res: Response,

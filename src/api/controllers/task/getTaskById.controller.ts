@@ -4,6 +4,10 @@ import { Prisma } from "@localPrisma/client/index.js";
 import type { Request, Response } from "express";
 import { z } from "zod";
 
+// @desc Get task
+// @route GET /tasks/:taskId
+// @access Private
+
 const getTaskById = async (req: Request<{ taskId: string }>, res: Response) => {
   try {
     const taskId = taskIdSchema.parse(Number(req.params.taskId));

@@ -4,6 +4,10 @@ import { Prisma } from "@localPrisma/client/index.js";
 import type { Request, Response } from "express";
 import { z } from "zod";
 
+// @desc delete task
+// @route DELETE /tasks/:taskId
+// @access Private
+
 const deleteTaskById = async (
   req: Request<{ taskId: string }>,
   res: Response,
