@@ -9,14 +9,20 @@ import bcrypt from "bcrypt";
 import type { Request, Response } from "express";
 import { z } from "zod";
 
-export const registerSchema = z.object({
-  email: emailValidation,
-  password: passwordValidation,
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters long",
-  }),
-  image: imageUrlValidation,
-});
+export const registerSchema = z
+  .object({
+    email: emailValidation,
+    password: passwordValidation,
+    confirmPassword: passwordValidation,
+    name: z.string().min(2, {
+      message: "Name must be at least 2 characters long",
+    }),
+    image: imageUrlValidation,
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Passwords do not match",
+  });
 
 type registerBody = z.infer<typeof registerSchema>;
 
@@ -62,16 +68,22 @@ const register = async (
 
     // Handle Prisma errors
     if (error && typeof error === "object" && "code" in error) {
+      // Unique constraint broken (email)
       if (error.code === "P2002") {
         return res.status(409).json({ message: "Email already exists" });
       }
     }
 
-    console.error(error);
+    // bcrypt or env errors (e.g. invalid salt rounds type)
+    if (error instanceof TypeError || error instanceof RangeError) {
+      return res.status(500).json({
+        message: "Internal configuration error",
+      });
+    }
+
+    console.error("Unhandled register error:", error);
     res.status(500).json({ message: "Error creating user" });
   }
 };
 
 export default register;
-
-//TODO add second confirm password
