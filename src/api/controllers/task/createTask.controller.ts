@@ -1,9 +1,7 @@
 import type { createTaskBodyType } from "@api/validators/tasks/createTask.schema.js";
 import createTaskSchema from "@api/validators/tasks/createTask.schema.js";
 import { prisma } from "@lib/prisma.js";
-import { Prisma } from "@localPrisma/client/index.js";
-import type { Request, Response } from "express";
-import { z } from "zod";
+import type { NextFunction, Request, Response } from "express";
 
 // @desc Create task
 // @route POST /tasks
@@ -12,9 +10,13 @@ import { z } from "zod";
 const createTask = async (
   req: Request<unknown, unknown, createTaskBodyType>,
   res: Response,
+  next: NextFunction,
 ) => {
+  req.log.info("Task creation started");
   try {
-    const { title, description, authorId } = createTaskSchema.parse(req.body);
+    const parsed = createTaskSchema.safeParse(req.body);
+    if (!parsed.success) return next(parsed.error);
+    const { title, description, authorId } = parsed.data;
 
     const result = await prisma.task.create({
       data: {
@@ -26,24 +28,8 @@ const createTask = async (
 
     res.status(201).json(result);
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return res.status(400).json({
-        message: "Validation error",
-        errors: error.issues,
-      });
-    }
-
-    // Handle Prisma errors
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === "P2025") {
-        return res.status(404).json({
-          message: "Author not found",
-        });
-      }
-    }
-
-    console.error(error);
-    res.status(500).json({ message: "Error creating task" });
+    req.log.error({ error }, "Error creating task");
+    next(error);
   }
 };
 

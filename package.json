@@ -6,7 +6,7 @@
   "scripts": {
     "prebuild": "pnpm run lint && pnpm run format && pnpm run test:ci",
     "build": "rm -rf dist && tsc && tsc-alias",
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch src/server.ts | pino-pretty",
     "prisma:generate": "pnpm exec prisma generate --generator client",
     "dev:prisma": "pnpm exec prisma dev",
     "dev:prisma-studio": "pnpm exec prisma studio",
@@ -47,7 +47,8 @@
     "express": "^5.1.0",
     "helmet": "^8.1.0",
     "jose": "^6.1.1",
-    "morgan": "^1.10.1",
+    "pino": "^10.1.0",
+    "pino-http": "^11.0.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
@@ -57,7 +58,6 @@
     "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
-    "@types/morgan": "^1.9.10",
     "@types/node": "^24.10.0",
     "@typescript-eslint/eslint-plugin": "^8.46.4",
     "@typescript-eslint/parser": "^8.46.4",
@@ -78,6 +78,7 @@
     "globals": "^16.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.6",
+    "pino-pretty": "^13.1.2",
     "playwright": "^1.56.1",
     "prettier": "^3.6.2",
     "prisma": "^6.19.0",

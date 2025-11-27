@@ -1,11 +1,13 @@
 "use strict";
+import errorHandler from "@api/middlewares/error.middleware.js";
+import logger from "@api/middlewares/logger.middleware.js";
 import routes from "@api/routes/index.route.js";
 import compression from "compression";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import helmet from "helmet";
-import morgan from "morgan";
+import pinoHttp from "pino-http";
 // import env from "@config/env.js";
 
 // for cookies https://www.npmjs.com/package/cookie-parser
@@ -19,7 +21,16 @@ dotenv.config();
 const app = express();
 
 // Logging
-app.use(morgan("dev")); // use 'tiny' in production for less verbose logs
+
+app.use(
+  // @ts-expect-error: the types say it's not callable but this seems to be the intended way
+  pinoHttp({
+    logger,
+    customProps: () => ({
+      reqId: crypto.randomUUID(), // request ID track it
+    }),
+  }),
+);
 
 // CORS
 app.use(
@@ -50,5 +61,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", routes);
+
+app.use(errorHandler);
 
 export default app;
