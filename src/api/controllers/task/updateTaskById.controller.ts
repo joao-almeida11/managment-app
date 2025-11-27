@@ -16,8 +16,13 @@ const updateTaskById = async (
 ) => {
   req.log.info("Task update started");
   try {
-    const taskId = taskIdSchema.parse(Number(req.params.taskId));
-    const data = updateTaskByIdSchema.parse(req.body);
+    const parsed = taskIdSchema.safeParse(Number(req.params.taskId));
+    if (!parsed.success) return next(parsed.error);
+    const taskId = parsed.data;
+
+    const parsedBody = updateTaskByIdSchema.safeParse(req.body);
+    if (!parsedBody.success) return next(parsedBody.error);
+    const { data } = parsedBody;
 
     const result = await prisma.task.update({
       where: { id: taskId },

@@ -13,7 +13,9 @@ const getTaskById = async (
 ) => {
   req.log.info("GET Task started");
   try {
-    const taskId = taskIdSchema.parse(Number(req.params.taskId));
+    const parsed = taskIdSchema.safeParse(Number(req.params.taskId));
+    if (!parsed.success) return next(parsed.error);
+    const taskId = parsed.data;
 
     const result = await prisma.task.findUniqueOrThrow({
       where: { id: taskId },

@@ -13,7 +13,9 @@ const deleteTaskById = async (
 ) => {
   req.log.info("Task deletion started");
   try {
-    const taskId = taskIdSchema.parse(Number(req.params.taskId));
+    const parsed = taskIdSchema.safeParse(Number(req.params.taskId));
+    if (!parsed.success) return next(parsed.error);
+    const taskId = parsed.data;
 
     await prisma.task.delete({
       where: { id: taskId },
