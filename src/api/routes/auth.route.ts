@@ -1,4 +1,4 @@
-import register from "@api/controllers/auth/register.js";
+import register from "@api/controllers/auth/register.controller.js";
 import { Router } from "express";
 // import { auth as authMiddleware } from "../middlewares/auth";
 

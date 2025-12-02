@@ -1,21 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
 
     // alias
     "baseUrl": ".",
     "paths": {
+      "@/*": ["./src/*"],
       "@localPrisma/*": ["./src/generated/*"],
       "@api/*": ["./src/api/*"],
+      "@api-docs/*": ["./src/api-docs/*"],
       "@lib/*": ["./src/api/lib/*"],
       "@config/*": ["./src/config/*"],
       "@tests/*": ["./tests/*"]
     },
 
-    "typeRoots": ["./node_modules/@types"],
-    "types": ["node"],
+    // "typeRoots": ["./node_modules/@types"],
+    // "types": ["node"],
 
     "outDir": "./dist",
 

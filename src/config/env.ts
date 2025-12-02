@@ -3,6 +3,7 @@ import "dotenv/config";
 import { z } from "zod";
 
 const envSchema = z.object({
+  HOST: z.enum(["localhost"]),
   NODE_ENV: z.enum(["development", "production", "test"]),
   DATABASE_URL: z.url(),
   BCRYPT_ENCRYPTION_SALT_ROUNDS: z.enum(["10", "12"]).default("12"),
@@ -17,6 +18,7 @@ export type Env = z.infer<typeof envSchema>;
 const env: Env = envSchema.parse(process.env);
 
 // Safe constants
+export const HOST: string = env.HOST;
 export const JWT_SECRET: string = env.JWT_SECRET;
 export const DATABASE_URL: string = env.DATABASE_URL;
 export const NODE_ENV: Env["NODE_ENV"] = env.NODE_ENV;

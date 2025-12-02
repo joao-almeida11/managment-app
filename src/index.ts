@@ -2,6 +2,7 @@
 import errorHandler from "@api/middlewares/error.middleware.js";
 import logger from "@api/middlewares/logger.middleware.js";
 import routes from "@api/routes/index.route.js";
+import { openAPIRouter } from "@api-docs/openApiRouter.js";
 import compression from "compression";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -23,7 +24,6 @@ const app = express();
 // Logging
 
 app.use(
-  // @ts-expect-error: the types say it's not callable but this seems to be the intended way
   pinoHttp({
     logger,
     customProps: () => ({
@@ -61,6 +61,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", routes);
+
+// Swagger UI
+app.use(openAPIRouter);
 
 app.use(errorHandler);
 
