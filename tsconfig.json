@@ -1,0 +1,53 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+
+    // alias
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@localPrisma/*": ["./src/generated/*"],
+      "@api/*": ["./src/api/*"],
+      "@api-docs/*": ["./src/api-docs/*"],
+      "@lib/*": ["./src/api/lib/*"],
+      "@config/*": ["./src/config/*"],
+      "@tests/*": ["./tests/*"]
+    },
+
+    // "typeRoots": ["./node_modules/@types"],
+    // "types": ["node"],
+
+    "outDir": "./dist",
+
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "removeComments": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+
+    "forceConsistentCasingInFileNames": true,
+
+    // let TypeScript understand default imports from CommonJS-style modules
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+
+    // settings to directly run typescript without compiling
+    // https://nodejs.org/api/typescript.html#type-stripping
+    // "allowImportingTsExtensions": true,
+    // "noEmit": true,
+    // "verbatimModuleSyntax": true
+  },
+  "tsc-alias": {
+    "resolveFullPaths": true
+  },
+  "include": ["src", "tests"],
+  "exclude": ["node_modules", "dist", "coverage"]
+}

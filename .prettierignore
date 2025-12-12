@@ -1,0 +1,5 @@
+dist/
+out/
+node_modules/
+.tanstack/
+src/generated/client
