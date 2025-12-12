@@ -8,6 +8,7 @@ const envSchema = z.object({
   DATABASE_URL: z.url(),
   BCRYPT_ENCRYPTION_SALT_ROUNDS: z.enum(["10", "12"]).default("12"),
   JWT_SECRET: z.string().min(6),
+  JWT_REFRESH_SECRET: z.string().min(6),
   PORT: z.enum(["3000", "3001"]).default("3001"),
   LOG_LEVEL: z.enum(["info"]),
 });
@@ -20,6 +21,7 @@ const env: Env = envSchema.parse(process.env);
 // Safe constants
 export const HOST: string = env.HOST;
 export const JWT_SECRET: string = env.JWT_SECRET;
+export const JWT_REFRESH_SECRET: string = env.JWT_REFRESH_SECRET;
 export const DATABASE_URL: string = env.DATABASE_URL;
 export const NODE_ENV: Env["NODE_ENV"] = env.NODE_ENV;
 export const PORT: Env["PORT"] = env.PORT;
